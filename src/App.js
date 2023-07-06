@@ -1,7 +1,10 @@
 // import logo from './logo.svg';
 import './App.css';
 import Navigation from "./Components/Navigation/Navigation";
+import Logo from "./Components/Logo/Logo";
 import React, { Component } from 'react';
+import 'tachyons';
+
 
 // function App() {
 //   return (
@@ -19,8 +22,8 @@ class App extends Component {
     return (
       <div className="App">
         <Navigation />
-        {/* <Logo />
-        <ImageLinkForm  />
+        <Logo />
+        {/* <ImageLinkForm  />
         <FaceRecognition  /> */}
       </div>
     );

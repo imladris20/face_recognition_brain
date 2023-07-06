@@ -1,9 +1,10 @@
 import React from "react";
+import 'tachyons';
 
 const Navigation = () => {
     return (
-        <nav>
-            <p>Sign out</p>
+        <nav style={{justifyContent: "right", display: "flex"}}>
+            <p className='f3 link dim black underline pa3 pointer' >Sign out</p>
         </nav>
     )
 }
