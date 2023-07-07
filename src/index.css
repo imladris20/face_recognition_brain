@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Fira Sans','Noto Sans','Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Courier New', 'Courier', 'Fira Sans','Noto Sans', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(to right, rgb(252,200,155) , rgb(255,95,162));
