@@ -13,7 +13,6 @@ import ParticlesBg from 'particles-bg';
 const MODEL_ID = 'face-detection';
 const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';  
 
-
 const returnRequestOptions = (imageUrl) => {
   
   const PAT = 'e429cbb5db254b2482b6ebbe4d76f656';
@@ -56,8 +55,28 @@ class App extends Component {
     super();
     this.state = {
       input: '',
-      imageUrl: ''
+      imageUrl: '',
+      box: {}
     }
+  }
+
+  boxLocationCalculation = (result) => {
+    const faceSource = result.outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('inputImage') ;
+    const width = Number(image.width);
+    const height = Number(image.height);
+    return {
+      topRow: faceSource.top_row * height,
+      bottomRow: height - (faceSource.bottom_row * height),
+      leftCol: faceSource.left_col * width,
+      rightCol: width - (faceSource.right_col * width)
+    }
+  }
+
+  displayBox = (box) => {
+    console.log(box);
+    this.setState({box: box});
+
   }
 
   onInputChange = (event) => {
@@ -71,10 +90,12 @@ class App extends Component {
 
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", returnRequestOptions(this.state.input))  //  如果括號裡面寫(this.state.imageUrl)會發生400錯誤，可試試看，這是進階議題
       .then(response => response.json())
-      .then(result => console.log(result.outputs[0].data.regions[0].region_info.bounding_box))
+      .then(result => {
+        console.log(result);
+        this.displayBox(this.boxLocationCalculation(result));
+      })
       .catch(error => console.log('error', error));
   }
-
 
   render(){
     return (
@@ -87,10 +108,17 @@ class App extends Component {
           onInputChange={this.onInputChange}
           onButtonClick={this.onButtonClick}
         />
-        <FaceRecognition  imageUrl={this.state.imageUrl}/>
+        <FaceRecognition
+          box={this.state.box} 
+          imageUrl={this.state.imageUrl}
+        />
       </div>
     );
   }
 }
 
 export default App;
+
+//  example pictures 01:https://www.kpopdays.com/wp-content/uploads/2022/09/TW06.png
+//  example pictures 02:https://img.ltn.com.tw/Upload/style/page/2023/03/06/230306-24520-1-4OWtF.jpg
+//  example pictures 03:https://i.ytimg.com/vi/FGKWuSjA_44/maxresdefault.jpg
