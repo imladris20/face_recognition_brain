@@ -99,19 +99,19 @@ class App extends Component {
       .catch(error => console.log('error', error));
   }
 
-  onRouteChange = () => {
-    this.setState({route: 'Home'});
+  onRouteChange = (page) => {
+    this.setState({route: page});
   }
 
-  onRouteBack = () => {
-    this.setState({route: 'Signin'});
-  }
+  // onRouteBack = () => {
+  //   this.setState({route: 'Signin'});
+  // }
 
   render(){
     return (
       <div className="App">
         <ParticlesBg type="cobweb" num={150} bg={true} />
-        <Navigation onRouteBack={this.onRouteBack} />
+        <Navigation onRouteChange={this.onRouteChange} />
         {this.state.route === 'Signin' ?
           <Signin onRouteChange={this.onRouteChange} />
           :
