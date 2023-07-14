@@ -58,29 +58,34 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box: {},
+      boxes: [],
       route: 'Signin',
       isSigned: false
     }
   }
 
   boxLocationCalculation = (result) => {
-    const faceSource = result.outputs[0].data.regions[0].region_info.bounding_box;
+    const faceSource = result.outputs[0].data.regions.map(eachregion => eachregion.region_info.bounding_box);
+    //  faceSource 是一個array，每個index裝了每張臉的邊界資訊，也就是object
+    //  例如：{top_row: 0.54057693, left_col: 0.24122444, bottom_row: 0.73186797, right_col: 0.3427886}
+    //  因此也要return一個裝滿換算過資訊的object的array
+
     const image = document.getElementById('inputImage') ;
     const width = Number(image.width);
     const height = Number(image.height);
-    return {
-      topRow: faceSource.top_row * height,
-      bottomRow: height - (faceSource.bottom_row * height),
-      leftCol: faceSource.left_col * width,
-      rightCol: width - (faceSource.right_col * width)
-    }
+    return faceSource.map( eachface => {
+      return {
+        topRow: eachface.top_row * height,
+        bottomRow: height - (eachface.bottom_row * height),
+        leftCol: eachface.left_col * width,
+        rightCol: width - (eachface.right_col * width)
+      }
+    });
   }
 
-  displayBox = (box) => {
-    console.log(box);
-    this.setState({box: box});
-
+  displayBox = (boxes) => {
+    console.log(boxes);
+    this.setState({boxes: boxes});
   }
 
   onInputChange = (event) => {
@@ -116,7 +121,7 @@ class App extends Component {
   // }
 
   render(){
-    const {imageUrl, box, route, isSigned} = this.state;
+    const {imageUrl, boxes, route, isSigned} = this.state;
     return (
       <div className="App">
         <ParticlesBg type="cobweb" num={150} bg={true} />
@@ -130,7 +135,7 @@ class App extends Component {
               onButtonClick={this.onButtonClick}
             />
             <FaceRecognition
-              box={box} 
+              boxes={boxes} 
               imageUrl={imageUrl}
             />
           </div>
