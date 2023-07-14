@@ -5,6 +5,7 @@ import Logo from "./Components/Logo/Logo";
 import Rank from "./Components/Rank/Rank";
 import ImageLinkForm from "./Components/ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./Components/FaceRecognition/FaceRecognition";
+import Signin from "./Components/Signin/Signin";
 import React, { Component } from 'react';
 import 'tachyons';
 import ParticlesBg from 'particles-bg';
@@ -56,7 +57,8 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box: {}
+      box: {},
+      route: 'Signin'
     }
   }
 
@@ -102,16 +104,22 @@ class App extends Component {
       <div className="App">
         <ParticlesBg type="cobweb" num={150} bg={true} />
         <Navigation />
-        <Logo />
-        <Rank />
-        <ImageLinkForm 
-          onInputChange={this.onInputChange}
-          onButtonClick={this.onButtonClick}
-        />
-        <FaceRecognition
-          box={this.state.box} 
-          imageUrl={this.state.imageUrl}
-        />
+        {this.state.route === 'Signin' ?
+          <Signin />
+          :
+          <div>
+            <Logo />
+            <Rank />
+            <ImageLinkForm 
+              onInputChange={this.onInputChange}
+              onButtonClick={this.onButtonClick}
+            />
+            <FaceRecognition
+              box={this.state.box} 
+              imageUrl={this.state.imageUrl}
+            />
+          </div>
+        }
       </div>
     );
   }
