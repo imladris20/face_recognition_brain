@@ -6,6 +6,7 @@ import Rank from "./Components/Rank/Rank";
 import ImageLinkForm from "./Components/ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./Components/FaceRecognition/FaceRecognition";
 import Signin from "./Components/Signin/Signin";
+import Registration from "./Components/Registration/Registration";
 import React, { Component } from 'react';
 import 'tachyons';
 import ParticlesBg from 'particles-bg';
@@ -112,9 +113,7 @@ class App extends Component {
       <div className="App">
         <ParticlesBg type="cobweb" num={150} bg={true} />
         <Navigation onRouteChange={this.onRouteChange} />
-        {this.state.route === 'Signin' ?
-          <Signin onRouteChange={this.onRouteChange} />
-          :
+        {this.state.route === 'Home' ?
           <div>
             <Logo />
             <Rank />
@@ -127,6 +126,10 @@ class App extends Component {
               imageUrl={this.state.imageUrl}
             />
           </div>
+          :
+          (this.state.route === 'Signin'
+          ?<Signin onRouteChange={this.onRouteChange} />
+          :<Registration onRouteChange={this.onRouteChange} /> )
         }
       </div>
     );
