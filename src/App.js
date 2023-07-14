@@ -59,7 +59,8 @@ class App extends Component {
       input: '',
       imageUrl: '',
       box: {},
-      route: 'Signin'
+      route: 'Signin',
+      isSigned: false
     }
   }
 
@@ -89,9 +90,10 @@ class App extends Component {
 
   onButtonClick = () => {
     console.log("You just clicked");
-    this.setState({imageUrl: this.state.input});
+    const {input} = this.state;
+    this.setState({imageUrl: input});
 
-    fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", returnRequestOptions(this.state.input))  //  如果括號裡面寫(this.state.imageUrl)會發生400錯誤，可試試看，這是進階議題
+    fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", returnRequestOptions(input))  //  如果括號裡面寫(this.state.imageUrl)會發生400錯誤，可試試看，這是進階議題
       .then(response => response.json())
       .then(result => {
         console.log(result);
@@ -101,6 +103,11 @@ class App extends Component {
   }
 
   onRouteChange = (page) => {
+    if ( page === "Home") {
+      this.setState({isSigned: true});
+    } else if ( page === "Signin") {
+      this.setState({isSigned: false});
+    }
     this.setState({route: page});
   }
 
@@ -109,11 +116,12 @@ class App extends Component {
   // }
 
   render(){
+    const {imageUrl, box, route, isSigned} = this.state;
     return (
       <div className="App">
         <ParticlesBg type="cobweb" num={150} bg={true} />
-        <Navigation onRouteChange={this.onRouteChange} />
-        {this.state.route === 'Home' ?
+        <Navigation onRouteChange={this.onRouteChange} isSigned={isSigned} />
+        {route === 'Home' ?
           <div>
             <Logo />
             <Rank />
@@ -122,12 +130,12 @@ class App extends Component {
               onButtonClick={this.onButtonClick}
             />
             <FaceRecognition
-              box={this.state.box} 
-              imageUrl={this.state.imageUrl}
+              box={box} 
+              imageUrl={imageUrl}
             />
           </div>
           :
-          (this.state.route === 'Signin'
+          (route === 'Signin'
           ?<Signin onRouteChange={this.onRouteChange} />
           :<Registration onRouteChange={this.onRouteChange} /> )
         }
