@@ -60,8 +60,25 @@ class App extends Component {
       imageUrl: '',
       boxes: [],
       route: 'Signin',
-      isSigned: false
+      isSigned: false,
+      user: {
+        id:'',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+      }
     }
+  }
+
+  loadUser = (data) => {
+    this.setState({user:{
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+    }})
   }
 
   //  Testing to plug in to the backend end points
@@ -150,7 +167,7 @@ class App extends Component {
           :
           (route === 'Signin'
           ?<Signin onRouteChange={this.onRouteChange} />
-          :<Registration onRouteChange={this.onRouteChange} /> )
+          :<Registration loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> )
         }
       </div>
     );

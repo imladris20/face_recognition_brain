@@ -5,14 +5,14 @@ class Registration extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            Username:'',
+            name:'',
             email:'',
             password:''
         }
     };
 
-    onUserNameChange = (event) => {
-        this.setState({Username: event.target.value})
+    onNameChange = (event) => {
+        this.setState({name: event.target.value})
     };
 
     onEmailChange = (event) => {
@@ -25,7 +25,22 @@ class Registration extends React.Component{
 
     onSubmitRegistration = () => {
         console.log(this.state);
-        this.props.onRouteChange("Signin")
+        fetch('http://localhost:3000/register',{
+            method:'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password
+            })
+        })
+            .then(response => response.json())
+            .then(newUser => {
+                if(newUser){
+                    this.props.loadUser(newUser);
+                    this.props.onRouteChange("Signin");
+                }
+            })
     }
 
     render(){
@@ -43,7 +58,7 @@ class Registration extends React.Component{
                                     type="text" 
                                     name="username"  
                                     id="username"
-                                    onChange={this.onUserNameChange}
+                                    onChange={this.onNameChange}
                                 />
                             </div>
                             <div className="mv3">
