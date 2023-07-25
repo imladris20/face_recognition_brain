@@ -64,6 +64,14 @@ class App extends Component {
     }
   }
 
+  //  Testing to plug in to the backend end points
+  //  後端有設定如果root被get到時，會回傳database.user
+  /* componentDidMount(){
+    fetch('http://localhost:3000')
+      .then(response => response.json())
+      .then(console.log);
+  } */
+
   boxLocationCalculation = (result) => {
     const faceSource = result.outputs[0].data.regions.map(eachregion => eachregion.region_info.bounding_box);
     //  faceSource 是一個array，每個index裝了每張臉的邊界資訊，也就是object
