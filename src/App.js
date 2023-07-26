@@ -127,6 +127,19 @@ class App extends Component {
       .then(response => response.json())
       .then(result => {
         console.log(result);
+        if(result) {
+          fetch('http://localhost:3000/image', {
+            method:'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(data => {
+              this.setState(Object.assign(this.state.user, {entries: data}))
+            });
+        }
         this.displayBox(this.boxLocationCalculation(result));
       })
       .catch(error => console.log('error', error));
@@ -146,7 +159,7 @@ class App extends Component {
   // }
 
   render(){
-    const {imageUrl, boxes, route, isSigned} = this.state;
+    const {imageUrl, boxes, route, isSigned, user} = this.state;
     return (
       <div className="App">
         <ParticlesBg type="cobweb" num={150} bg={true} />
@@ -154,7 +167,7 @@ class App extends Component {
         {route === 'Home' ?
           <div>
             <Logo />
-            <Rank />
+            <Rank name={user.name} entries={user.entries} />
             <ImageLinkForm 
               onInputChange={this.onInputChange}
               onButtonClick={this.onButtonClick}
@@ -166,7 +179,7 @@ class App extends Component {
           </div>
           :
           (route === 'Signin'
-          ?<Signin onRouteChange={this.onRouteChange} />
+          ?<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
           :<Registration loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> )
         }
       </div>
