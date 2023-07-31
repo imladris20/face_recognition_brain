@@ -119,7 +119,7 @@ class App extends Component {
   }
 
   onButtonClick = () => {
-    console.log("You just clicked");
+    // console.log("You just clicked");
     const {input} = this.state;
     this.setState({imageUrl: input});
 
