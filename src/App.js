@@ -15,6 +15,8 @@ import ParticlesBg from 'particles-bg';
 const MODEL_ID = 'face-detection';
 const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';  
 
+
+//  20-55行是Clarifai API 的模板code
 const returnRequestOptions = (imageUrl) => {
   
   const PAT = 'e429cbb5db254b2482b6ebbe4d76f656';
@@ -52,23 +54,25 @@ const returnRequestOptions = (imageUrl) => {
   return requestOptions;
 }
 
+const initialState = {
+  input: '',
+  imageUrl: '',
+  boxes: [],
+  route: 'Signin',
+  isSigned: false,
+  user: {
+    id:'',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+}
+
 class App extends Component {
   constructor(){
     super();
-    this.state = {
-      input: '',
-      imageUrl: '',
-      boxes: [],
-      route: 'Signin',
-      isSigned: false,
-      user: {
-        id:'',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
-    }
+    this.state = initialState;
   }
 
   loadUser = (data) => {
@@ -149,7 +153,7 @@ class App extends Component {
     if ( page === "Home") {
       this.setState({isSigned: true});
     } else if ( page === "Signin") {
-      this.setState({isSigned: false});
+      this.setState(initialState);
     }
     this.setState({route: page});
   }
