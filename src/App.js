@@ -142,7 +142,8 @@ class App extends Component {
             .then(response => response.json())
             .then(data => {
               this.setState(Object.assign(this.state.user, {entries: data}))
-            });
+            })
+            .catch(console.log('something went wrong'));
         }
         this.displayBox(this.boxLocationCalculation(result));
       })
