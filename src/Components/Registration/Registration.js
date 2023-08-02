@@ -36,7 +36,7 @@ class Registration extends React.Component{
         })
             .then(response => response.json())
             .then(newUser => {
-                if(newUser){
+                if(newUser.id){
                     this.props.loadUser(newUser);
                     this.props.onRouteChange("Signin");
                 }
