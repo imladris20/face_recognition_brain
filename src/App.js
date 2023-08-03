@@ -12,48 +12,6 @@ import 'tachyons';
 import ParticlesBg from 'particles-bg';
 // import Clarifai from 'clarifai';
 
-const MODEL_ID = 'face-detection';
-const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';  
-
-
-//  20-55行是Clarifai API 的模板code
-const returnRequestOptions = (imageUrl) => {
-  
-  const PAT = 'e429cbb5db254b2482b6ebbe4d76f656';
-  const USER_ID = 'imladris20';       
-  const APP_ID = 'face_recognition_brain';
-  // const MODEL_ID = 'face-detection';
-  // const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
-  const IMAGE_URL = imageUrl;
-
-  const raw = JSON.stringify({
-      "user_app_id": {
-          "user_id": USER_ID,
-          "app_id": APP_ID
-      },
-      "inputs": [
-          {
-              "data": {
-                  "image": {
-                      "url": IMAGE_URL
-                  }
-              }
-          }
-      ]
-  });
-
-  const requestOptions = {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Key ' + PAT
-      },
-      body: raw
-  };
-
-  return requestOptions;
-}
-
 const initialState = {
   input: '',
   imageUrl: '',
@@ -127,7 +85,14 @@ class App extends Component {
     const {input} = this.state;
     this.setState({imageUrl: input});
 
-    fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", returnRequestOptions(input))  //  如果括號裡面寫(this.state.imageUrl)會發生400錯誤，可試試看，這是進階議題
+    //  如果括號裡面寫(this.state.imageUrl)會發生400錯誤，可試試看，這是進階議題
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
       .then(response => response.json())
       .then(result => {
         console.log(result);
@@ -143,7 +108,7 @@ class App extends Component {
             .then(data => {
               this.setState(Object.assign(this.state.user, {entries: data}))
             })
-            .catch(console.log('something went wrong'));
+            .catch( error => console.log('something went wrong', error));
         }
         this.displayBox(this.boxLocationCalculation(result));
       })
