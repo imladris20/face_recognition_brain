@@ -81,7 +81,7 @@ class App extends Component {
   }
 
   onButtonClick = () => {
-    // console.log("You just clicked");
+    console.log("You just clicked");
     const {input} = this.state;
     this.setState({imageUrl: input});
 
@@ -95,7 +95,7 @@ class App extends Component {
     })
       .then(response => response.json())
       .then(result => {
-        // console.log(result);
+        console.log(result);
         if(result) {
           fetch('https://face-recognition-brain-api-79k5.onrender.com/image', {
             method:'put',
