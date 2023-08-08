@@ -25,7 +25,7 @@ class Registration extends React.Component{
 
     onSubmitRegistration = () => {
         // console.log(this.state);
-        fetch('http://localhost:3000',{
+        fetch('http://localhost:3000/register',{
             method:'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
