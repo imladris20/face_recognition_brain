@@ -81,10 +81,9 @@ class App extends Component {
   }
 
   onButtonClick = () => {
-    console.log("You just clicked");
-    const {input} = this.state;
-    this.setState({imageUrl: input});
-
+    // const {input} = this.state;
+    // this.setState({imageUrl: input});
+    this.setState({ imageUrl: this.state.input });
     //  如果括號裡面寫(this.state.imageUrl)會發生400錯誤，可試試看，這是進階議題
     fetch('https://face-recognition-brain-api-79k5.onrender.com/imageurl', {
       method: 'post',
