@@ -93,12 +93,8 @@ class App extends Component {
           input: this.state.input
         })
     })
-      .then(response => {
-        console.log("after first fetch", response);
-        response.json();
-      })  
+      .then(response => response.json())  
       .then(result => {
-        console.log("before get into second fetch", result);
         if(result) {
           fetch('http://localhost:3000/image', {
             method:'put',
