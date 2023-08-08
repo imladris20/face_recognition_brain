@@ -88,7 +88,7 @@ class App extends Component {
     //  如果括號裡面寫(this.state.imageUrl)會發生400錯誤，可試試看，這是進階議題
     fetch('https://face-recognition-brain-api-79k5.onrender.com/imageurl', {
       method: 'post',
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',"Access-Control-Allow-Origin": "https://face-recognition-brain-api-79k5.onrender.com/"},
         body: JSON.stringify({
           input: this.state.input
         })
@@ -99,7 +99,7 @@ class App extends Component {
         if(result) {
           fetch('https://face-recognition-brain-api-79k5.onrender.com/image', {
             method:'put',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json', "Access-Control-Allow-Origin": "https://face-recognition-brain-api-79k5.onrender.com/"},
             body: JSON.stringify({
               id: this.state.user.id
             })
