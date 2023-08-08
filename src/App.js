@@ -93,12 +93,8 @@ class App extends Component {
           input: this.state.input
         })
     })
-      .then(response => {
-        console.log("first fetch", response);
-        response.json();  
-      })
+      .then(response => response.json())
       .then(result => {
-        console.log("before get into second fetch", result);
         if(result) {
           fetch('https://face-recognition-brain-api-79k5.onrender.com/image', {
             method:'put',
