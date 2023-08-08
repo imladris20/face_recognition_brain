@@ -86,7 +86,7 @@ class App extends Component {
     this.setState({imageUrl: input});
 
     //  如果括號裡面寫(this.state.imageUrl)會發生400錯誤，可試試看，這是進階議題
-    fetch('https://face-recognition-brain-api-79k5.onrender.com/imageurl', {
+    fetch('http://localhost:3000/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -100,7 +100,7 @@ class App extends Component {
       .then(result => {
         console.log("before get into second fetch", result);
         if(result) {
-          fetch('https://face-recognition-brain-api-79k5.onrender.com/image', {
+          fetch('http://localhost:3000/image', {
             method:'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

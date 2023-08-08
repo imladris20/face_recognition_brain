@@ -25,7 +25,7 @@ class Registration extends React.Component{
 
     onSubmitRegistration = () => {
         // console.log(this.state);
-        fetch('https://face-recognition-brain-api-79k5.onrender.com/register',{
+        fetch('http://localhost:3000',{
             method:'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
